@@ -20,8 +20,8 @@ steps:
     Write-Output '##vso[task.setvariable variable=GitHubRepo;]$GITHUB_REPO'
     
     # DEBUG
-    Write-Output "GITHUB_REPO = $(GitHubRepo)"
-    Write-Output "GITHUB_HOST = $(GitHubHost)"
+    Write-Output "GITHUB_REPO = $GitHubRepo"
+    Write-Output "GITHUB_HOST = $GitHubHost"
     
   displayName: 'Initialise the necessary variables for Code Scanning'
 
