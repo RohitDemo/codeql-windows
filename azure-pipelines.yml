@@ -12,16 +12,16 @@ steps:
     # Generate the GitHub host URL
     Write-Output $Build.Repository.Uri
     # $GITHUB_HOST="https://($Build.Repository.Uri.split("/")[2])"
-    echo "##vso[task.setvariable variable=GitHubHost;]$GITHUB_HOST"
+    #echo "##vso[task.setvariable variable=GitHubHost;]$GITHUB_HOST"
     
     # Generate Repo name in Org/Repo format and assign it to GitHubRepo
-    $GITHUB_ORG=($Build.Repository.Uri.split("/")[3])
-    $GITHUB_REPO_NAME=($Build.Repository.Uri.split("/")[4]) -replace ".git",""
-    $GITHUB_REPO=$GITHUB_ORG+ "/" +$GITHUB_REPO_NAME
-    echo "##vso[task.setvariable variable=GitHubRepo;]$GITHUB_REPO"
+    #$GITHUB_ORG=($Build.Repository.Uri.split("/")[3])
+    #$GITHUB_REPO_NAME=($Build.Repository.Uri.split("/")[4]) -replace ".git",""
+    #$GITHUB_REPO=$GITHUB_ORG+ "/" +$GITHUB_REPO_NAME
+    #echo "##vso[task.setvariable variable=GitHubRepo;]$GITHUB_REPO"
     
     # Validate if all looks good
-    Write-Output "GITHUB_REPO = $GITHUB_REPO"
-    Write-Output "GITHUB_HOST = $GITHUB_HOST"
+    #Write-Output "GITHUB_REPO = $GITHUB_REPO"
+    #Write-Output "GITHUB_HOST = $GITHUB_HOST"
     
   displayName: 'Initialise the necessary variables for Code Scanning'
