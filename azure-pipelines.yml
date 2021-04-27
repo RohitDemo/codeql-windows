@@ -11,7 +11,7 @@ steps:
 - powershell: |
     # Generate the GitHub host URL
     Write-Output "Repo is $(Build.Repository.Uri)"
-    $GITHUB_HOST="https://" +$(Build.Repository.Uri).split("/")[2]
+    $GITHUB_HOST="https://"+"$(Build.Repository.Uri)".split("/")[2]
     Write-Output "Host is $GITHUB_HOST"
     #echo "##vso[task.setvariable variable=GitHubHost;]$GITHUB_HOST"
     
