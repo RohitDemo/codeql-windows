@@ -1,21 +1,26 @@
-# Node.js
-# Build a general Node.js project with npm.
-# Add steps that analyze code, save build artifacts, deploy, and more:
-# https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
-
 trigger:
 - master
 
 pool:
-  vmImage: 'ubuntu-latest'
+  vmImage: windows-latest
+
+variables:
+  buildConfiguration: 'Release'
 
 steps:
-- task: NodeTool@0
-  inputs:
-    versionSpec: '10.x'
-  displayName: 'Install Node.js'
-
 - script: |
-    npm install
-    npm test
-  displayName: 'npm install and test'
+    # Generate the GitHub host URL
+    $GITHUB_HOST="https://$($Build.Repository.Uri.split("/")[2])"
+    echo "##vso[task.setvariable variable=GitHubHost;]$GITHUB_HOST"
+    
+    # Generate Repo name in Org/Repo format and assign it to GitHubRepo
+    $GITHUB_ORG=($Build.Repository.Uri.split("/")[3])
+    $GITHUB_REPO_NAME=($Build.Repository.Uri.split("/")[4]) -replace ".git",""
+    $GITHUB_REPO=$GITHUB_ORG+ "/" +$GITHUB_REPO_NAME
+    echo "##vso[task.setvariable variable=GitHubRepo;]$GITHUB_REPO"
+    
+    # Validate if all looks good
+    Write-Output "GITHUB_REPO = $GITHUB_REPO"
+    Write-Output "GITHUB_HOST = $GITHUB_HOST"
+    
+  displayName: 'Initialise the necessary variables for Code Scanning'
