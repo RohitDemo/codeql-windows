@@ -13,7 +13,8 @@ steps:
     echo "##vso[task.setvariable variable=psJobVariable;isOutput=true]some_value"
 
 - script: |
-    echo "$(psJobVariable)"
+    echo "Build Repo Name: $(Build.Repository.Name)"
+    echo "Build Repo Provider: $(Build.Repository.Provider)"
 
 - powershell: |
     # Generate the GitHub host URL
