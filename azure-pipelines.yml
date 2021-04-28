@@ -11,13 +11,13 @@ steps:
 - powershell: |
     # Generate the GitHub host URL
     $GITHUB_HOST="https://"+"$(Build.Repository.Uri)".split("/")[2]
-    Write-Output '##vso[task.setvariable variable=GitHubHost;]$GITHUB_HOST'
+    Write-Output '##vso[task.setvariable variable=GitHubHost;isOutput=true]$GITHUB_HOST'
     
     # Generate Repo name in Org/Repo format and assign it to GitHubRepo
     $GITHUB_ORG="$(Build.Repository.Uri)".split("/")[3]
     $GITHUB_REPO_NAME="$(Build.Repository.Uri)".split("/")[4] -replace ".git",""
     $GITHUB_REPO=$GITHUB_ORG+ "/" +$GITHUB_REPO_NAME
-    Write-Output '##vso[task.setvariable variable=GitHubRepo;]$GITHUB_REPO'
+    Write-Output '##vso[task.setvariable variable=GitHubRepo;isOutput=true]$GITHUB_REPO'
     
     # DEBUG
     Write-Output "GITHUB_REPO = $GitHubRepo"
