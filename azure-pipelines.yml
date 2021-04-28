@@ -22,31 +22,10 @@ steps:
     # DEBUG
     Write-Output "GITHUB_REPO = $GitHubRepo"
     Write-Output "GITHUB_HOST = $GitHubHost"
-    
-- powershell: |
-    $codeql_runner_url = "https://github.com/github/codeql-action/releases/download/codeql-bundle-20210421/codeql-runner-win.exe"
-    $codeql_runner_output_file = "$PSScriptRoot\codeql-runner-win.exe"
-    try
-    {
-        $Response = Invoke-WebRequest -Uri $codeql_runner_url -OutFile $codeql_runner_output_file
-        Write-Output $Response
-        $StatusCode = $Response.StatusCode
-        Write-Output "Download completed successfully"
-        dir
-    }
-    catch
-    {
-        $StatusCode = $_.Exception.Response.StatusCode.value__
-        Write-Output $StatusCode
-        Write-Output "Download Failed"
-    }
-  displayName: 'Download CodeQL Runner and Binary'
+  name: set-vars-step  
+  displayName: 'Initialise the necessary variables for Code Scanning'
 
 - powershell: |
-    Write-Output "GITHUB_REPO = $GITHUB_REPO"
-    Write-Output "GITHUB_HOST = $GITHUB_HOST"
-    #& $codeql_runner_output_file init --repository $(GitHubRepo) --github-url $(GitHubHost) --github-auth $(GITHUB_PAT)
-    # . codeql-runner/codeql-env.sh
-    # <BUILD STEPS GO HERE>
-    #& $codeql_runner_output_file analyze --repository $(GitHubRepo) --github-url $(GitHubHost) --github-auth $(GITHUB_PAT) --commit $(Build.SourceVersion) --ref $(Build.SourceBranch)
-  displayName: 'CodeQL Scan'
+    Write-Output "GITHUB VAR: $(set-vars-step.GitHubRepo)"
+  name: check-vars
+  displayName: 'temp'
