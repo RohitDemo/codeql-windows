@@ -26,7 +26,7 @@ steps:
   displayName: 'Download CodeQL Runner and Binary'
 
 - powershell: |
-    GITHUB_HOST="https://$($Build.Repository.Uri.split("/")[2])"
+    $GITHUB_HOST="https://$($Build.Repository.Uri.split("/")[2])"
     $codeql_runner_output_file = "$PSScriptRoot\codeql-runner-win.exe"
     & $codeql_runner_output_file init --repository $(Build.Repository.Name) --github-url $GITHUB_HOST --github-auth $(GITHUB_PAT)
     # . codeql-runner/codeql-env.sh
