@@ -9,6 +9,21 @@ variables:
 
 steps:
 - powershell: |
+    # Generate the GitHub host URL
+    $GITHUB_HOST="https://"+"$(Build.Repository.Uri)".split("/")[2]
+    Write-Output '##vso[task.setvariable variable=GitHubHost;]$GITHUB_HOST'
+    
+    # Generate Repo name in Org/Repo format and assign it to GitHubRepo
+    $GITHUB_ORG="$(Build.Repository.Uri)".split("/")[3]
+    $GITHUB_REPO_NAME="$(Build.Repository.Uri)".split("/")[4] -replace ".git",""
+    $GITHUB_REPO=$GITHUB_ORG+ "/" +$GITHUB_REPO_NAME
+    Write-Output '##vso[task.setvariable variable=GitHubRepo;]$GITHUB_REPO'
+    
+    # DEBUG
+    Write-Output "GITHUB_REPO = $GitHubRepo"
+    Write-Output "GITHUB_HOST = $GitHubHost"
+    
+- powershell: |
     $codeql_runner_url = "https://github.com/github/codeql-action/releases/download/codeql-bundle-20210421/codeql-runner-win.exe"
     $codeql_runner_output_file = "$PSScriptRoot\codeql-runner-win.exe"
     try
@@ -17,6 +32,7 @@ steps:
         Write-Output $Response
         $StatusCode = $Response.StatusCode
         Write-Output "Download completed successfully"
+        dir
     }
     catch
     {
@@ -25,3 +41,12 @@ steps:
         Write-Output "Download Failed"
     }
   displayName: 'Download CodeQL Runner and Binary'
+
+- powershell: |
+    Write-Output "GITHUB_REPO = $GITHUB_REPO"
+    Write-Output "GITHUB_HOST = $GITHUB_HOST"
+    #& $codeql_runner_output_file init --repository $(GitHubRepo) --github-url $(GitHubHost) --github-auth $(GITHUB_PAT)
+    # . codeql-runner/codeql-env.sh
+    # <BUILD STEPS GO HERE>
+    #& $codeql_runner_output_file analyze --repository $(GitHubRepo) --github-url $(GitHubHost) --github-auth $(GITHUB_PAT) --commit $(Build.SourceVersion) --ref $(Build.SourceBranch)
+  displayName: 'CodeQL Scan'
