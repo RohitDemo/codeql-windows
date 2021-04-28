@@ -11,6 +11,7 @@ steps:
 - powershell: |
     # Generate the GitHub host URL
     $GITHUB_HOST="https://"+"$(Build.Repository.Uri)".split("/")[2]
+    $env:TEST="hello"
     Write-Output '##vso[task.setvariable variable=GitHubHost;isOutput=true]$GITHUB_HOST'
     
     # Generate Repo name in Org/Repo format and assign it to GitHubRepo
@@ -22,6 +23,7 @@ steps:
     # DEBUG
     Write-Output "GITHUB_REPO = $GitHubRepo"
     Write-Output "GITHUB_HOST = $GitHubHost"
+    Write-Output "Test is $env:TEST"
   name: setVarsStep  
   displayName: 'Initialise the necessary variables for Code Scanning'
 
