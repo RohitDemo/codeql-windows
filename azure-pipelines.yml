@@ -22,10 +22,10 @@ steps:
     # DEBUG
     Write-Output "GITHUB_REPO = $GitHubRepo"
     Write-Output "GITHUB_HOST = $GitHubHost"
-  name: set-vars-step  
+  name: setVarsStep  
   displayName: 'Initialise the necessary variables for Code Scanning'
 
 - powershell: |
-    Write-Output "GITHUB VAR: $(set-vars-step.GitHubRepo)"
-  name: check-vars
+    Write-Output "GITHUB VAR: $(setVarsStep.GitHubRepo)"
+  name: checkVars
   displayName: 'temp'
