@@ -8,6 +8,9 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
+- script: |
+    echo "Hello"
+   displayName: 'Script'
 - powershell: |
     # Generate the GitHub host URL
     $GITHUB_HOST="https://"+"$(Build.Repository.Uri)".split("/")[2]
