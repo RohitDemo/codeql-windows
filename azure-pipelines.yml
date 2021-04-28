@@ -10,6 +10,10 @@ variables:
 steps:
 - script: |
     echo "Hello"
+    echo "##vso[task.setvariable variable=psJobVariable;isOutput=true]some_value"
+
+- script: |
+    echo $(psJobVariable)
 
 - powershell: |
     # Generate the GitHub host URL
